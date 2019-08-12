@@ -1,0 +1,30 @@
+#!/bin/bash
+
+IMAGE="jlesage/firefox";
+NAME="firefox-container";
+
+CONTAINER="$(docker ps -aq -f name="${NAME}")";
+
+if [[ "$1" == "stop" ]]
+then
+	if [[ "${CONTAINER}" != "" ]]
+	then
+		docker kill "${CONTAINER}" &>/dev/null;
+	fi
+	exit 0;
+fi
+
+if [[ "${CONTAINER}" == "" ]]
+then
+	docker run -d --name="${NAME}" -p 5800:5800 -v "${HOME}/.firefox-container":/config --shm-size 2g "${IMAGE}";
+else
+	docker start "${CONTAINER}";
+fi
+
+until [[ $(curl -o /dev/null -sw "%{http_code}" http://localhost:5800/) == "200" ]]
+do
+	sleep 0.1
+done
+
+open http://localhost:5800
+
