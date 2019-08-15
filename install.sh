@@ -2,9 +2,14 @@
 
 git submodule init && git submodule update;
 
+TIME="$(date +%Y%m%d%H%M%S)";
 BASEDIRS=( "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" "$( cd "$( dirname "${BASH_SOURCE[0]}" )"/../privatedotfiles && pwd )" );
 
 CLEANUPFILE="$(mktemp)";
+
+# ensure brew runs first
+echo "${BASEDIRS[0]}/brew/install.sh ${CLEANUPFILE}";
+"${BASEDIRS[0]}/brew/install.sh" "${CLEANUPFILE}";
 
 for BASEDIR in ${BASEDIRS[@]};
 do
@@ -15,8 +20,9 @@ do
         ln -sf "${BASEDIR}/${dotfile}" "${HOME}/${dotfile}";
     done
 
-    find "${BASEDIR}" -name install.sh -maxdepth 2 -mindepth 2 | while read INSTALLSCRIPT;
+    find "${BASEDIR}" -name install.sh -maxdepth 2 -mindepth 2 | grep -v brew/install.sh | while read INSTALLSCRIPT;
     do
+        echo "${INSTALLSCRIPT} ${CLEANUPFILE}";
         "${INSTALLSCRIPT}" "${CLEANUPFILE}";
     done
 done
