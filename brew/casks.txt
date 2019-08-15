@@ -11,13 +11,13 @@ caskroom/cask/github
 caskroom/cask/goland
 caskroom/cask/google-backup-and-sync
 caskroom/cask/gpg-suite
-caskroom/cask/highsierramediakeyenabler
 caskroom/cask/intellij-idea-ce
 caskroom/cask/iterm2
 caskroom/cask/java
 caskroom/cask/keka
 caskroom/cask/keybase
 caskroom/cask/little-snitch
+caskroom/cask/macmediakeyforwarder
 caskroom/cask/muzzle
 caskroom/cask/ngrok
 caskroom/cask/osxfuse
@@ -37,3 +37,4 @@ caskroom/cask/webstorm
 caskroom/cask/whatsapp
 caskroom/cask/wireshark
 caskroom/cask/zeplin
+caskroom/versions/adoptopenjdk8
