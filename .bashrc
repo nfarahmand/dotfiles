@@ -15,6 +15,7 @@ alias dockerps='docker ps --format "{{json .}}" | jq';
 alias dockerpsa='docker ps -a --format "{{json .}}" | jq';
 alias dockerimages='docker images --format "{{json .}}" | jq';
 function dockerinspect { image="$1"; shift; docker inspect $image --format "{{json .}}" | jq $@; }
+alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
 
 # Only if this is a login shell
 if [[ $- = *i* ]]
