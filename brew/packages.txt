@@ -38,6 +38,7 @@ node
 nodenv
 pcre
 perl-build
+plantuml
 plenv
 pyenv
 pyenv-virtualenv
