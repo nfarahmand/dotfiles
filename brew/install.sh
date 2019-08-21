@@ -5,6 +5,12 @@
 which brew &>/dev/null || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)";
 
 BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+while read tap
+do
+	brew tap "${tap}";
+done < ${BASEDIR}/taps.txt
+
 while read cask
 do
     brew cask install "${cask}";

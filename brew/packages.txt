@@ -29,6 +29,7 @@ imagemagick
 jenv
 jq
 jsawk
+jwt-cli
 maven
 micro
 moreutils
