@@ -1,6 +1,6 @@
 # .bashrc must NOT output anything
 
-[[ -e ~/.private ]] && for rcfile in ~/.private/*rc; do . "${rcfile}" &>/dev/null; done;
+[[ -e ~/.private ]] && source /dev/stdin <<<"$(cat ~/.private/*rc 2>/dev/null)";
 
 # [[ "$(uname -s)" == "Darwin" ]] && alias ls='ls -laFG' || alias ls='ls -laF --color'
 [[ -e "/Applications/iTunes.app" ]] && alias ls='ls -laFG' || alias ls='ls -laF --color'
@@ -16,6 +16,7 @@ alias dockerpsa='docker ps -a --format "{{json .}}" | jq';
 alias dockerimages='docker images --format "{{json .}}" | jq';
 function dockerinspect { image="$1"; shift; docker inspect $image --format "{{json .}}" | jq $@; }
 alias jwt='/usr/local/bin/jwt';
+alias sha256='openssl dgst -sha256';
 alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
 alias goenvinit='eval "$(goenv init -)"';
 alias rbenvinit='eval "$(rbenv init -)"';
