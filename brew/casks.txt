@@ -38,3 +38,4 @@ caskroom/cask/whatsapp
 caskroom/cask/wireshark
 caskroom/cask/zeplin
 caskroom/versions/adoptopenjdk8
+homebrew/cask-fonts/font-fira-code

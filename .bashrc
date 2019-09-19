@@ -24,7 +24,8 @@ alias rbenvinit='eval "$(rbenv init -)"';
 # Only if this is a login shell
 if [[ $- = *i* ]]
 then
-    [[ -e ~/.liquidprompt/liquidprompt ]] && source ~/.liquidprompt/liquidprompt
+    # [[ -e ~/.liquidprompt/liquidprompt ]] && source ~/.liquidprompt/liquidprompt
+    [[ -e /usr/local/bin/starship ]] && eval "$(starship init bash)"
     [[ -e ~/.git-completion ]] && source ~/.git-completion
     which pyenv &>/dev/null && eval "$(pyenv init - --no-rehash)";
     which pyenv-virtualenv-init &>/dev/null && eval "$(pyenv virtualenv-init - --no-rehash)";
