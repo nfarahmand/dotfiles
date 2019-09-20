@@ -51,6 +51,7 @@ sbtenv
 scalaenv
 serveit
 socat
+starship
 tree
 vim
 watch
