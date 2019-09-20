@@ -9,3 +9,4 @@ export VISUAL="subl -w";
 export EDITOR="$VISUAL";
 
 export PATH="~/.private/.bin:~/.bin:/usr/local/sbin:$PATH";
+export STARSHIP_CONFIG="${HOME}/.starship.toml";
