@@ -8,17 +8,20 @@ BASEDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 while read tap
 do
-	brew tap "${tap}";
+	basetap="$(basename ${tap})";
+	tapdir="/usr/local/Homebrew/Library/Taps/${tap/$basetap/homebrew-$basetap}"
+	[[ -e "${tapdir}" ]] && echo "Already tapped: ${tap}" || brew tap "${tap}";
 done < ${BASEDIR}/taps.txt
 
 while read cask
 do
-    brew cask install "${cask}";
+	basecask="$(basename ${cask})";
+    [[ -e "/usr/local/Caskroom/${basecask}" ]] || compgen -G "${HOME}/Library/Caches/Homebrew/Cask/${basecask}--*" >/dev/null && echo "Already installed: ${basecask}" || brew cask install "${cask}";
 done < ${BASEDIR}/casks.txt
 
 while read package
 do
-    brew install "${package}";
+    [[ -e "/usr/local/opt/${package}" || -e "/usr/local/Cellar/${package}" ]] && echo "Already installed: ${package}" || brew install "${package}";
 done < ${BASEDIR}/packages.txt
 
 # only install mas on high sierra
@@ -42,7 +45,9 @@ fi
 # Any user from the admin group will be able to manage the homebrew and cask installation on the machine.
 for brewdir in "/usr/local/Cellar" "/usr/local/Caskroom" "/Library/Caches/Homebrew"
 do
-	sudo mkdir -p "${brewdir}" &>/dev/null;
-	sudo chgrp -R admin "${brewdir}";
-	sudo chmod -R g+w "${brewdir}";
+	[[ -e "${brewdir}" ]] || sudo mkdir -p "${brewdir}" &>/dev/null;
+	group="$(/bin/ls -ld "${brewdir}" | awk '{print $4}')";
+	[[ "${group}" == "admin" ]] || sudo chgrp -R admin "${brewdir}";
+	writeable="$(/bin/ls -ld "${brewdir}" | awk '{print substr($1,5,3)}')";
+	[[ "${writeable}" == "rwx" ]] || sudo chmod -R g+w "${brewdir}";
 done
