@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Something wrong with mas.  Keeps trying to install stuff that's already installed via app store in Mojave.
+exit 0;
 [[ "$(uname -s)" == "Darwin" ]] || { echo "Not OSX.  Bye" && exit 0; }
 
 which brew &>/dev/null || { echo "Install homebrew first." && exit 1; }
