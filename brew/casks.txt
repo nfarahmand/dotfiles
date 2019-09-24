@@ -11,6 +11,7 @@ caskroom/cask/github
 caskroom/cask/goland
 caskroom/cask/google-backup-and-sync
 caskroom/cask/gpg-suite
+caskroom/cask/iina
 caskroom/cask/intellij-idea-ce
 caskroom/cask/iterm2
 caskroom/cask/java
