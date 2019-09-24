@@ -36,7 +36,7 @@ defaults read com.googlecode.iterm2.plist >/dev/null
 defaults read -app iTerm >/dev/null
 
 # Prevent iTunes from hijacking the play key, but only if not on High Sierra
-which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsString | grep "10.13" &>/dev/null || launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
+which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsString | egrep "10.1(3|4)" &>/dev/null || launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
 
 # Prevent Cisco AnyConnect from launching at startup
 [[ -e /Library/LaunchAgents/com.cisco.anyconnect.gui.plist ]] &>/dev/null && launchctl unload -w /Library/LaunchAgents/com.cisco.anyconnect.gui.plist
