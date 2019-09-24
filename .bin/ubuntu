@@ -1,0 +1,46 @@
+#!/bin/bash
+
+IMAGE="dorowu/ubuntu-desktop-lxde-vnc:bionic";
+NAME="ubuntu-container";
+
+CONTAINER="$(docker ps -aq -f name="${NAME}")";
+
+if [[ "$1" == "stop" ]]
+then
+	if [[ "${CONTAINER}" != "" ]]
+	then
+		docker kill "${CONTAINER}" &>/dev/null;
+	fi
+	exit 0;
+fi
+
+function assignPort {
+	local port="";
+	until [[ "${port}" != "" ]]
+	do
+		port="$(jot -r 1 1024 65535)"
+		netstat -an | grep tcp4 | grep LISTEN | awk '{print $4}' | awk -F"." '{print $NF}' | /usr/bin/grep -e "^${port}$" &>/dev/null;
+		[[ $? -eq 0 ]] && port="";
+	done
+	echo ${port};
+}
+
+if [[ "${CONTAINER}" == "" ]]
+then
+	PORT="$(assignPort)";
+	docker run --rm -d --name="${NAME}" -p ${PORT}:80 --shm-size 2g "${IMAGE}";
+else
+	PORT="$(docker inspect ubuntu-container | jq -r '.[0].NetworkSettings.Ports["80/tcp"][0].HostPort')";
+	docker start "${CONTAINER}";
+fi
+
+x=300;
+sp="/-\|"
+until [[ $(curl -o /dev/null -sw "%{http_code}" http://localhost:${PORT}/) == "200" ]]
+do
+	printf "\b${sp:i++%${#sp}:1}"
+	sleep .1
+	((x-=1))
+done
+
+open http://localhost:${PORT}
