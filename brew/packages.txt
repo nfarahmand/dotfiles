@@ -9,6 +9,7 @@ bat
 calc
 coreutils
 dep
+dry
 ext2fuse
 ext4fuse
 findutils
