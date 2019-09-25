@@ -4,6 +4,7 @@
 
 # [[ "$(uname -s)" == "Darwin" ]] && alias ls='ls -laFG' || alias ls='ls -laF --color'
 [[ -e "/Applications/iTunes.app" ]] && alias ls='ls -laFG' || alias ls='ls -laF --color'
+[[ -e "/usr/local/bin/exa" ]] && alias ls='exa -laF'
 alias nonascii='pcregrep --color=auto -n "[\x80-\xFF]"'
 alias git='hub'
 alias grep='ggrep --color=auto'

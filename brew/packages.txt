@@ -12,6 +12,7 @@ dep
 dry
 ext2fuse
 ext4fuse
+exa
 findutils
 gawk
 git
