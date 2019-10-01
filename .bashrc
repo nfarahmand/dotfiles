@@ -12,6 +12,7 @@ alias sed='gsed'
 alias awk='gawk'
 alias elasticsearch='elasticsearch -Enetwork.host=0.0.0.0'
 alias cerebro='docker run --rm --name cerebro -it -p9000:9000 yannart/cerebro'
+function diff { [[ $# -ge 2 ]] && fleft="$(realpath ${1})" && fright="$(realpath ${2})" && subl --command "sublimerge_compare_paths {\"paths\": [\"${fleft}\", \"${fright}\"]}"; }
 alias dockerps='docker ps --format "{{json .}}" | jq';
 alias dockerpsa='docker ps -a --format "{{json .}}" | jq';
 alias dockerimages='docker images --format "{{json .}}" | jq';
