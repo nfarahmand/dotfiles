@@ -4,3 +4,6 @@ truncate_to_repo=false
 
 [character]
 use_symbol_for_status=true
+
+[aws]
+disabled=true
