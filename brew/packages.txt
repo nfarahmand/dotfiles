@@ -8,6 +8,7 @@ basex
 bat
 calc
 coreutils
+ctop
 dep
 dry
 ext2fuse
