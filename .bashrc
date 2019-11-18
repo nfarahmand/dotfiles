@@ -40,6 +40,8 @@ alias awk='gawk'
 alias elasticsearch='elasticsearch -Enetwork.host=0.0.0.0'
 alias cerebro='docker run -d --rm $([[ -e ${HOME}/.cerebro/application.conf ]] && echo "-v ${HOME}/.cerebro/application.conf:/opt/cerebro/conf/application.conf") --name cerebro -it -p9000:9000 yannart/cerebro && urlWaitSpin http://localhost:9000 200 true && docker attach cerebro';
 alias swagger='docker run -d --rm --name swagger -it -p8888:8080 swaggerapi/swagger-editor && urlWaitSpin http://localhost:8888 200 true && docker attach swagger';
+alias es='docker run -d --rm --name elasticsearch -it -p9200:9200 -p9300:9300 -v /usr/share/elasticsearch/data elasticsearch:6.8.1 && urlWaitSpin http://localhost:9200 200 true && docker attach elasticsearch';
+alias ff='docker run -d --rm --name=firefox -p5800:5800 -v "${HOME}/.firefox-container":/config --shm-size 2g jlesage/firefox && urlWaitSpin http://localhost:5800 200 true && docker attach firefox';
 function diff { [[ $# -ge 2 ]] && fleft="$(realpath ${1})" && fright="$(realpath ${2})" && subl --command "sublimerge_compare_paths {\"paths\": [\"${fleft}\", \"${fright}\"]}"; }
 alias dockerps='docker ps --format "{{json .}}" | jq';
 alias dockerpsa='docker ps -a --format "{{json .}}" | jq';
