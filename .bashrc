@@ -29,7 +29,17 @@ function urlWaitSpin {
     printf "\b \b";
     [[ "${openUrl}" == "true" ]] && open "${url}";
     return 0;
+}
 
+function getFreePort {
+    local port="";
+    until [[ "${port}" != "" ]]
+    do
+        port="$(jot -r 1 1024 65535)"
+        netstat -an | grep tcp4 | grep LISTEN | awk '{print $4}' | awk -F"." '{print $NF}' | /usr/bin/grep -e "^${port}$" &>/dev/null;
+        [[ $? -eq 0 ]] && port="";
+    done
+    echo ${port};
 }
 
 alias nonascii='pcregrep --color=auto -n "[\x80-\xFF]"'
