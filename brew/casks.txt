@@ -19,11 +19,11 @@ caskroom/cask/keka
 caskroom/cask/keybase
 caskroom/cask/little-snitch
 caskroom/cask/macmediakeyforwarder
+caskroom/cask/mullvadvpn
 caskroom/cask/muzzle
 caskroom/cask/ngrok
 caskroom/cask/osxfuse
 caskroom/cask/postman
-caskroom/cask/private-internet-access
 caskroom/cask/pycharm
 caskroom/cask/seashore
 caskroom/cask/signal
