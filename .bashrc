@@ -68,13 +68,13 @@ alias rbenvinit='eval "$(rbenv init -)"';
 # Only if this is a login shell
 if [[ $- = *i* ]]
 then
-    # [[ -e ~/.liquidprompt/liquidprompt ]] && source ~/.liquidprompt/liquidprompt
-    [[ -e /usr/local/bin/starship ]] && eval "$(starship init ${SHELL})";
-    [[ -e ~/.git-completion ]] && source ~/.git-completion 2>/dev/null;
-    which pyenv &>/dev/null && eval "$(pyenv init - --no-rehash)";
-    which pyenv-virtualenv-init &>/dev/null && eval "$(pyenv virtualenv-init - --no-rehash)";
-    which nodenv &>/dev/null && eval "$(nodenv init - --no-rehash)";
-    which jenv &>/dev/null && eval "$(jenv init - --no-rehash)";
+    [[ -e "${HOME}/.git-completion" ]] && source ~/.git-completion 2>/dev/null;
+    [[ -e "/usr/local/bin/starship" ]] && eval "$(starship init ${SHELL})";
+    [[ -e "/usr/local/bin/pyenv" ]] && eval "$(pyenv init - --no-rehash)";
+    [[ -e "/usr/local/bin/pyenv-virtualenv-init" ]] && eval "$(pyenv virtualenv-init - --no-rehash)";
+    [[ -e "/usr/local/bin/nodenv" ]] && eval "$(nodenv init - --no-rehash)";
+    [[ -e "/usr/local/bin/jenv" ]] && eval "$(jenv init - --no-rehash)";
+    [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh";
     # which rbenv &>/dev/null && eval "$(rbenv init - --no-rehash)";
     # which goenv &>/dev/null && eval "$(goenv init - --no-rehash)";
     # which scalaenv &>/dev/null && eval "$(scalaenv init - --no-rehash)";

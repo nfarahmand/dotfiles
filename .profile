@@ -10,3 +10,4 @@ export EDITOR="$VISUAL";
 
 export PATH="${HOME}/.private/.bin:${HOME}/.bin:/usr/local/sbin:$PATH";
 export STARSHIP_CONFIG="${HOME}/.starship.toml";
+export SDKMAN_DIR="${HOME}/.sdkman";
