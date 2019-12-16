@@ -19,6 +19,7 @@ caskroom/cask/keka
 caskroom/cask/keybase
 caskroom/cask/little-snitch
 caskroom/cask/macmediakeyforwarder
+caskroom/cask/meld
 caskroom/cask/mullvadvpn
 caskroom/cask/muzzle
 caskroom/cask/ngrok
