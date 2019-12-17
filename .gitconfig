@@ -13,8 +13,8 @@
 [color]
 	ui = auto
 [diff]
-	# tool = diffmerge
-	tool = meld
+	tool = diffmerge
+	# tool = meld
 [difftool]
 	prompt = false
 [difftool "diffmerge"]
@@ -23,8 +23,8 @@
   trustExitCode = true
   cmd = meld \"$LOCAL\" \"$REMOTE\"
 [merge]
-	# tool = diffmerge
-	tool = meld
+	tool = diffmerge
+	# tool = meld
 [mergetool]
 	prompt = false
 [mergetool "diffmerge"]
