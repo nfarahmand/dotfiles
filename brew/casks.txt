@@ -6,6 +6,7 @@ caskroom/cask/daedalus
 caskroom/cask/diffmerge
 caskroom/cask/docker
 caskroom/cask/firefox
+caskroom/cask/freac
 caskroom/cask/ghost-browser
 caskroom/cask/github
 caskroom/cask/goland
