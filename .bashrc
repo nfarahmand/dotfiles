@@ -64,19 +64,14 @@ alias sha256='openssl dgst -sha256';
 alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
 alias goenvinit='eval "$(goenv init -)"';
 alias rbenvinit='eval "$(rbenv init -)"';
+alias jenvinit='eval "$(jenv init -)"';
+alias nodenvinit='eval "$(nodenv init -)"';
+alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)"'
 
 # Only if this is a login shell
 if [[ $- = *i* ]]
 then
     [[ -e "${HOME}/.git-completion" ]] && source ~/.git-completion 2>/dev/null;
     [[ -e "/usr/local/bin/starship" ]] && eval "$(starship init ${SHELL})";
-    [[ -e "/usr/local/bin/pyenv" ]] && eval "$(pyenv init - --no-rehash)";
-    [[ -e "/usr/local/bin/pyenv-virtualenv-init" ]] && eval "$(pyenv virtualenv-init - --no-rehash)";
-    [[ -e "/usr/local/bin/nodenv" ]] && eval "$(nodenv init - --no-rehash)";
-    [[ -e "/usr/local/bin/jenv" ]] && eval "$(jenv init - --no-rehash)";
     [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh";
-    # which rbenv &>/dev/null && eval "$(rbenv init - --no-rehash)";
-    # which goenv &>/dev/null && eval "$(goenv init - --no-rehash)";
-    # which scalaenv &>/dev/null && eval "$(scalaenv init - --no-rehash)";
-    # which sbtenv &>/dev/null && eval "$(sbtenv init - --no-rehash)";
 fi
