@@ -71,7 +71,8 @@ alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)
 # Only if this is a login shell
 if [[ $- = *i* ]]
 then
-    [[ -e "${HOME}/.git-completion" ]] && source ~/.git-completion 2>/dev/null;
+    [[ -e "${HOME}/.loginenv" ]] && source "${HOME}/.loginenv" 2>/dev/null;
+    [[ -e "${HOME}/.git-completion" ]] && source "${HOME}/.git-completion" 2>/dev/null;
     [[ -e "/usr/local/bin/starship" ]] && eval "$(starship init ${SHELL})";
     [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh";
 fi
