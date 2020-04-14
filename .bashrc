@@ -68,6 +68,18 @@ alias jenvinit='eval "$(jenv init -)"';
 alias nodenvinit='eval "$(nodenv init -)"';
 alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)"'
 
+function openapi-generator-cli {
+    [[ $# -eq 2 ]] || echo "Usage: $0 <filename> <language>" && return 1;
+    filename="$1";
+    language="$2"
+    tmpdir="$(mktemp -d)";
+    cp "$filename" "$tmpdir";
+    docker run --rm \
+        -v "$tmpdir:/local" openapitools/openapi-generator-cli generate \
+        -i "/local/$filename" \
+        -g "$language"
+}
+
 # Only if this is a login shell
 if [[ $- = *i* ]]
 then
