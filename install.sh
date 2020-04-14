@@ -7,6 +7,21 @@ BASEDIRS=( "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" "$( cd "$( dirnam
 
 CLEANUPFILE="$(mktemp)";
 
+#Enable thumbprint ID for sudo
+PAM_SUDO="/etc/pam.d/sudo";
+grep "pam_tid.so" "${PAM_SUDO}" &>/dev/null
+if [[ $? -ne 0 ]]
+then
+    echo "Adding thumbprint ID to sudo...";
+    tmpfile="$(mktemp)";
+    grep "#" "${PAM_SUDO}" >> "${tmpfile}";
+    echo "auth       sufficient     pam_tid.so" >> "${tmpfile}";    
+    grep -v "#" "${PAM_SUDO}" >> "${tmpfile}";
+    sudo cp "${PAM_SUDO}" "${PAM_SUDO}.${TIME}";
+    sudo cp "${tmpfile}" "${PAM_SUDO}";
+    sudo chmod 444 "${PAM_SUDO}";
+fi
+
 # ensure brew runs first
 echo "${BASEDIRS[0]}/brew/install.sh ${CLEANUPFILE}";
 "${BASEDIRS[0]}/brew/install.sh" "${CLEANUPFILE}";
@@ -32,6 +47,7 @@ echo "Setting up iTerm2 defaults..."
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string ${HOME}/.iterm
 defaults write com.googlecode.iterm2.plist SUEnableAutomaticChecks -bool false
+defaults write com.googlecode.iterm2.plist BootstrapDaemon -bool false #makes sudo thumbprint ID work
 defaults read com.googlecode.iterm2.plist >/dev/null
 defaults read -app iTerm >/dev/null
 
