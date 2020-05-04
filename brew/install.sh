@@ -51,3 +51,6 @@ do
 	writeable="$(/bin/ls -ld "${brewdir}" | awk '{print substr($1,5,3)}')";
 	[[ "${writeable}" == "rwx" ]] || sudo chmod -R g+w "${brewdir}";
 done
+
+#disable DVC analytics
+which dvc &>/dev/null && dvc config --global core.analytics false

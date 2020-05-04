@@ -11,6 +11,7 @@ coreutils
 ctop
 dep
 dry
+dvc
 ext2fuse
 ext4fuse
 exa
