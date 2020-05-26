@@ -26,4 +26,6 @@ bindkey '\C-x\C-e' edit-command-line
 autoload -U select-word-style
 select-word-style bash
 
+alias -s json='jq .'
+
 . ${HOME}/.bashrc
