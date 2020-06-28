@@ -61,6 +61,7 @@ alias dockerimages='docker images --format "{{json .}}" | jq';
 function dockerinspect { image="$1"; shift; docker inspect $image --format "{{json .}}" | jq $@; }
 alias jwt='/usr/local/bin/jwt';
 alias sha256='openssl dgst -sha256';
+alias weather='curl wttr.in';
 alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
 alias goenvinit='eval "$(goenv init -)"';
 alias rbenvinit='eval "$(rbenv init -)"';
