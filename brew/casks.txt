@@ -30,6 +30,7 @@ homebrew/cask/pycharm
 homebrew/cask/seashore
 homebrew/cask/signal
 homebrew/cask/slack
+homebrew/cask/sonos
 homebrew/cask/spotify
 homebrew/cask/sublime-text
 homebrew/cask/telegram
