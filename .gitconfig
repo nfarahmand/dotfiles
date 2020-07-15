@@ -135,3 +135,5 @@
 	stupid = status
 [credential]
 	helper = osxkeychain
+[pull]
+	ff = only
