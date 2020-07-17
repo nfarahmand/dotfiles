@@ -1,3 +1,4 @@
+homebrew/cask/1password
 homebrew/cask/atom
 homebrew/cask/authy
 homebrew/cask/charles
