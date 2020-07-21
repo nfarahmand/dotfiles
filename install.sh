@@ -63,6 +63,9 @@ then
     find /usr/local/Caskroom/private-internet-access -name "Private Internet Access Installer.app" | sort -n | tail -1 | while read line; do open "${line}"; done;
 fi
 
+# Fix zsh compinit permission issue
+compaudit | xargs chmod g-w
+
 if [[ -s "${CLEANUPFILE}" ]]
 then
 	read -p "Would you like to clean up backed up files? " -n 1 -r
