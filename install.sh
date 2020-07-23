@@ -69,7 +69,7 @@ then
 fi
 
 # Fix zsh compinit permission issue
-compaudit | xargs chmod g-w
+zsh -ic 'compaudit | xargs chmod g-w'
 
 if [[ -s "${CLEANUPFILE}" ]]
 then
