@@ -51,6 +51,11 @@ defaults write com.googlecode.iterm2.plist BootstrapDaemon -bool false #makes su
 defaults read com.googlecode.iterm2.plist >/dev/null
 defaults read -app iTerm >/dev/null
 
+# Enable keyboard to be used to navigate dialogs.  
+# This probably won't take effect until after you open the sysprefs->keyboard->shortcuts window or restart.
+# See https://stackoverflow.com/a/54192723
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
+
 # Prevent iTunes from hijacking the play key, but only if not on High Sierra
 which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsString | egrep "10.1(3|4)" &>/dev/null || launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
 
