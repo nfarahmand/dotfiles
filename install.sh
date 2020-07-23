@@ -62,12 +62,6 @@ which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsStr
 # Prevent Cisco AnyConnect from launching at startup
 [[ -e /Library/LaunchAgents/com.cisco.anyconnect.gui.plist ]] &>/dev/null && launchctl unload -w /Library/LaunchAgents/com.cisco.anyconnect.gui.plist
 
-# PIA Installer
-if [[ ! -e "/Applications/Private Internet Access.app" ]]
-then
-    find /usr/local/Caskroom/private-internet-access -name "Private Internet Access Installer.app" | sort -n | tail -1 | while read line; do open "${line}"; done;
-fi
-
 # Fix zsh compinit permission issue
 zsh -ic 'compaudit | xargs chmod g-w'
 
