@@ -57,7 +57,7 @@ defaults read -app iTerm >/dev/null
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
 
 # Prevent iTunes from hijacking the play key, but only if not on High Sierra
-which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsString | egrep "10.1(3|4)" &>/dev/null || launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist
+which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsString | egrep "10.1(3|4)" &>/dev/null || launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist &>/dev/null
 
 # Prevent Cisco AnyConnect from launching at startup
 [[ -e /Library/LaunchAgents/com.cisco.anyconnect.gui.plist ]] &>/dev/null && launchctl unload -w /Library/LaunchAgents/com.cisco.anyconnect.gui.plist
