@@ -71,10 +71,10 @@ then
 	echo
 	if [[ $REPLY =~ ^[Yy]$ ]]
 	then
-    	cat "${CLEANUPFILE}" | sed -E s/dotfilebak.+/dotfilebak/g | while read line
+    	cat "${CLEANUPFILE}" | while read line
     	do
-    		echo -e "Removing ${line}.*";
-    		rm "${line}".*;
+    		echo -e "Removing ${line}";
+    		rm "${line}";
     	done
     fi
 fi
