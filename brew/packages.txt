@@ -37,6 +37,7 @@ jenv
 jq
 jsawk
 jwt-cli
+keys
 maven
 micro
 moreutils
