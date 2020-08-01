@@ -62,6 +62,7 @@ function dockerinspect { image="$1"; shift; docker inspect $image --format "{{js
 alias jwt='/usr/local/bin/jwt';
 alias sha256='openssl dgst -sha256';
 alias weather='curl wttr.in';
+alias whereami='curl -s ifconfig.co/json | jq .';
 alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
 alias goenvinit='eval "$(goenv init -)"';
 alias rbenvinit='eval "$(rbenv init -)"';
