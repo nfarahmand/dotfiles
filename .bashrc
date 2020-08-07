@@ -88,5 +88,6 @@ then
     [[ -e "${HOME}/.loginenv" ]] && source "${HOME}/.loginenv" 2>/dev/null;
     [[ -e "${HOME}/.git-completion" ]] && source "${HOME}/.git-completion" 2>/dev/null;
     [[ -e "/usr/local/bin/starship" ]] && eval "$(starship init ${SHELL})";
+    [[ -e "/usr/local/bin/direnv" ]] && eval "$(direnv hook ${SHELL})"
     [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh";
 fi

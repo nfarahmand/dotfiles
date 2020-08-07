@@ -11,6 +11,7 @@ coreutils
 ctop
 deno
 dep
+direnv
 dry
 dvc
 ext2fuse
