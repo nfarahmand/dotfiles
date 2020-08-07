@@ -5,6 +5,7 @@
 [core]
 	editor = subl -w
 	pager = less -x4
+	excludesFile = ~/.gitexcludes
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f

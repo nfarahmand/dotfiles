@@ -1,0 +1,17 @@
+*.egg-info
+*.pyc
+*.pyc
+*.swm
+*.swn
+*.swo
+*.swp
+.envrc
+.go-version
+.idea
+.java-version
+.node-version
+.python-version
+.ruby-version
+.sbt-version
+.scala-version
+__pycache__
