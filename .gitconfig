@@ -54,16 +54,22 @@
 	up = !git update
 	smash = !git ir
 
-	# interactive rebase
-	ir = !sh -c 'git rebase -i origin/${1-master}' -
+	# show the first branch ever 	
+	root = !git reflog show --all | grep refs/heads | tail -1 | awk -F@ '{print $1}' | awk -F/ '{print $NF}'
 
-	# log aliases
-	log-branch = log origin/master..
+	# interactive rebase
+	rb = !sh -c 'git rebase ${1-$(git root)}' -
+	ir = !sh -c 'git rebase -i ${1-$(git root)}' -
+
+	# all commits since root
+	log-branch = !git log $(git root)..
 	blog = !git log-branch
+
+	# all commits by me
 	mlog = !git log --committer=\"`git me`\"
 
 	# update current branch
-	update = !sh -c 'git fetch origin && git rebase -p origin/${1-master}' -
+	update = !sh -c 'git fetch origin && git rebase -p ${1-$(git root)}' -
 
 	# creates a diff of current branch against supplied branch, usage: git export-branch [refbranch]
 	branch-name = !git for-each-ref --format='%(refname:short)' `git symbolic-ref HEAD`
@@ -78,8 +84,8 @@
 	# today's commits without formatting or paging
 	today-text = !git --no-pager today --no-color
 
-	# files different from master on current branch
-	fdm = !git diff origin/master... --name-status
+	# files different from master/main on current branch
+	fdm = !git diff $(git root)... --name-status
 
 	# last commit info in svn style
 	last = !git show --name-status
@@ -95,17 +101,17 @@
 	done = !sh -c '~/bin/done -d $1' -
 
 	# `git spawn my-new-branch`
-	# make new branch based on master no matter which branch is checked out
-	spawn = !sh -c 'git checkout -b $1 ${2-master} && git config branch.$1.localmerge ${2-master}' - 
+	# make new branch based on master/main no matter which branch is checked out
+	spawn = !sh -c 'git checkout -b $1 ${2-$(git root)} && git config branch.$1.localmerge ${2-$(git root)}' - 
 
 	# `git nuke my-old-branch`
-	# (Checks out master and does a non-forced delete on the branch entered)
-	nuke = !git co master && sh -c 'git br -d $1' -
+	# (Checks out master/main and does a non-forced delete on the branch entered)
+	nuke = !git co $(git config --get init.defaultBranch) && sh -c 'git branch -d $1' -
 
 	# `git sync`
-	# update current branch and master
+	# update current branch and master/main
 	sync = !git update && \
-		git co master && \
+		git co $(git root) && \
 		git pull && \
 		git co @{-1} 
 
