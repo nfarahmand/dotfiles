@@ -66,10 +66,11 @@ alias whereami='curl -s ifconfig.co/json | jq .';
 alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
 alias goenvinit='eval "$(goenv init -)"';
 alias luaenvinit='eval "$(luaenv init -)"';
+alias luaverinit='. /usr/local/bin/luaver';
 alias rbenvinit='eval "$(rbenv init -)"';
 alias jenvinit='eval "$(jenv init -)"';
 alias nodenvinit='eval "$(nodenv init -)"';
-alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)"'
+alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)"';
 
 function openapi-generator-cli {
     [[ $# -eq 2 ]] || echo "Usage: $0 <filename> <language>" && return 1;

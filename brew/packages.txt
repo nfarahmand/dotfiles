@@ -39,6 +39,7 @@ jq
 jsawk
 jwt-cli
 keys
+luaver
 maven
 micro
 moreutils
