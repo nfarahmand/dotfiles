@@ -65,6 +65,7 @@ alias weather='curl wttr.in';
 alias whereami='curl -s ifconfig.co/json | jq .';
 alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
 alias goenvinit='eval "$(goenv init -)"';
+alias luaenvinit='eval "$(luaenv init -)"';
 alias rbenvinit='eval "$(rbenv init -)"';
 alias jenvinit='eval "$(jenv init -)"';
 alias nodenvinit='eval "$(nodenv init -)"';
