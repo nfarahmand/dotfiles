@@ -106,7 +106,7 @@
 
 	# `git nuke my-old-branch`
 	# (Checks out master/main and does a non-forced delete on the branch entered)
-	nuke = !git co $(git config --get init.defaultBranch) && sh -c 'git branch -d $1' -
+	nuke = !git co $(git root) && sh -c 'git branch -D $1'
 
 	# `git sync`
 	# update current branch and master/main
