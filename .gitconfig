@@ -54,6 +54,8 @@
 	up = !git update
 	smash = !git ir
 
+	trackall = "!git branch -r | grep -v HEAD | grep -v $(git branch-name) | while read remote; do git branch --track ${remote#origin/} $remote; done"
+
 	# show the first branch ever 	
 	root = !git reflog show --all | grep refs/heads | tail -1 | awk -F@ '{print $1}' | awk -F/ '{print $NF}'
 
