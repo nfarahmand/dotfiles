@@ -6,4 +6,4 @@ truncate_to_repo=false
 use_symbol_for_status=true
 
 [aws]
-disabled=true
+displayed_items="profile"
