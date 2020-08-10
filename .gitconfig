@@ -49,7 +49,7 @@
 	df = diff
 	lg = log -p
 	rso = remote show origin
-	me = config user.name
+	me = config user.email
 
 	up = !git update
 	smash = !git ir
