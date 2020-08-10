@@ -54,7 +54,6 @@ alias openapi='docker run -d --rm --name openapi -it -p3000:3000 mermade/openapi
 alias es='docker run -d --rm --name elasticsearch -it -p9200:9200 -p9300:9300 -v /usr/share/elasticsearch/data elasticsearch:6.8.1 && urlWaitSpin http://localhost:9200 200 true && docker attach elasticsearch';
 alias ff='docker run -d --rm --name=firefox -p5800:5800 -v "${HOME}/.firefox-container":/config --shm-size 2g --security-opt seccomp=unconfined jlesage/firefox && urlWaitSpin http://localhost:5800 200 true && docker attach firefox';
 alias ubuntu='PORT="$(getFreePort)" && docker run -d --rm --name=ubuntu -p${PORT}:80 --shm-size 2g dorowu/ubuntu-desktop-lxde-vnc:bionic && urlWaitSpin http://localhost:${PORT} 200 true && docker attach ubuntu';
-function diff { [[ $# -ge 2 ]] && fleft="$(realpath ${1})" && fright="$(realpath ${2})" && subl --command "sublimerge_compare_paths {\"paths\": [\"${fleft}\", \"${fright}\"]}"; }
 alias dockerps='docker ps --format "{{json .}}" | jq';
 alias dockerpsa='docker ps -a --format "{{json .}}" | jq';
 alias dockerimages='docker images --format "{{json .}}" | jq';
