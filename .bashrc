@@ -43,7 +43,6 @@ function getFreePort {
 }
 
 alias nonascii='pcregrep --color=auto -n "[\x80-\xFF]"'
-alias git='hub'
 alias grep='ggrep --color=auto'
 alias sed='gsed'
 alias awk='gawk'
