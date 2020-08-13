@@ -4,6 +4,7 @@
 *.swn
 *.swo
 *.swp
+.DS_Store
 .envrc
 .go-version
 .idea
