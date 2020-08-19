@@ -8,6 +8,7 @@
 .envrc
 .go-version
 .idea
+.ipynb_checkpoints
 .java-version
 .lua-version
 .node-version
