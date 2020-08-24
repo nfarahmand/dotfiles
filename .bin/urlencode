@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+
+import sys
+
+try:
+	import urllib.parse as u
+except:
+	import urllib as u
+
+
+def encode():
+    try:
+        args = sys.argv[1:]
+        if args:
+            print(u.quote(' '.join(args)))
+        else:
+            print(u.quote(sys.stdin.read().strip()))
+    except KeyboardInterrupt as ki:
+        pass
+
+def decode():
+    try:
+        args = sys.argv[1:]
+        if args:
+            print(u.unquote_plus(' '.join(args)))
+        else:
+            print(u.unquote_plus(sys.stdin.read().strip()))
+    except KeyboardInterrupt as ki:
+        pass
+
+if __name__ == '__main__':
+    if sys.argv[0].endswith('encode'):
+        encode()
+    elif sys.argv[0].endswith('decode'):
+        decode()
+    else:
+        print("Unknown command")
