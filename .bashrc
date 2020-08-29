@@ -6,42 +6,6 @@
 [[ -e "/Applications/iTunes.app" ]] && alias ls='ls -laFG' || alias ls='ls -laF --color'
 [[ -e "/usr/local/bin/exa" ]] && alias ls='exa -laF'
 
-function urlWaitSpin {
-    url="${1}";
-    expectedStatus="${2:-200}";
-    openUrl="${3:-false}";
-    timeout=300;
-    sp="⣾⣽⣻⢿⡿⣟⣯⣷";
-    i=0;
-    until [[ $(curl -o /dev/null -sw "%{http_code}" "${url}") == "${expectedStatus}" && ${timeout} -gt 0 ]]
-    do
-        [[ "${BASH_VERSION}" != "" ]] && printf "\b${sp:i++%${#sp}:1}"
-        if [[ "${ZSH_VERSION}" != "" ]]
-        then
-            ((i%=${#sp}));
-            ((i+=1));
-            printf "\b${${(@z)sp}[$i]//\"}"
-        fi
-        sleep .1
-        ((timeout-=1))
-        [[ ${timeout} -le 0 ]] && printf "\b \b" && return 1;
-    done
-    printf "\b \b";
-    [[ "${openUrl}" == "true" ]] && open "${url}";
-    return 0;
-}
-
-function getFreePort {
-    local port="";
-    until [[ "${port}" != "" ]]
-    do
-        port="$(($RANDOM % 64511 + 1024))"
-        netstat -an | grep tcp4 | grep LISTEN | awk '{print $4}' | awk -F"." '{print $NF}' | /usr/bin/grep -e "^${port}$" &>/dev/null;
-        [[ $? -eq 0 ]] && port="";
-    done
-    echo ${port};
-}
-
 function loadAliases {
     alias nonascii='pcregrep --color=auto -n "[\x80-\xFF]"';
     which ggrep &>/dev/null && alias grep='ggrep --color=auto';
@@ -62,14 +26,14 @@ function loadAliases {
     alias sha256='openssl dgst -sha256';
     alias weather='curl wttr.in';
     alias whereami='curl -s ifconfig.co/json | jq .';
-    alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
-    alias goenvinit='eval "$(goenv init -)"';
-    alias luaenvinit='eval "$(luaenv init -)"';
+    alias scalaenvinit='eval "$(scalaenv init - --no-rehash)" && eval "$(sbtenv init - --no-rehash)"';
+    alias goenvinit='eval "$(goenv init - --no-rehash)"';
+    alias luaenvinit='eval "$(luaenv init - --no-rehash)"';
     alias luaverinit='. /usr/local/bin/luaver';
-    alias rbenvinit='eval "$(rbenv init -)"';
-    alias jenvinit='eval "$(jenv init -)"';
-    alias nodenvinit='eval "$(nodenv init -)"';
-    alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)"';
+    alias rbenvinit='eval "$(rbenv init - --no-rehash)"';
+    alias jenvinit='eval "$(jenv init - --no-rehash)"';
+    alias nodenvinit='eval "$(nodenv init - --no-rehash)"';
+    alias pyenvinit='eval "$(pyenv init - --no-rehash)" && eval "$(pyenv virtualenv-init init - --no-rehash)"';
 
     function openapi-generator-cli {
         [[ $# -eq 2 ]] || echo "Usage: $0 <filename> <language>" && return 1;
@@ -82,6 +46,46 @@ function loadAliases {
             -i "/local/$filename" \
             -g "$language"
     }
+
+    function urlWaitSpin {
+        url="${1}";
+        expectedStatus="${2:-200}";
+        openUrl="${3:-false}";
+        timeout=300;
+        sp="⣾⣽⣻⢿⡿⣟⣯⣷";
+        i=0;
+        until [[ $(curl -o /dev/null -sw "%{http_code}" "${url}") == "${expectedStatus}" && ${timeout} -gt 0 ]]
+        do
+            [[ "${BASH_VERSION}" != "" ]] && printf "\b${sp:i++%${#sp}:1}"
+            if [[ "${ZSH_VERSION}" != "" ]]
+            then
+                ((i%=${#sp}));
+                ((i+=1));
+                printf "\b${${(@z)sp}[$i]//\"}"
+            fi
+            sleep .1
+            ((timeout-=1))
+            [[ ${timeout} -le 0 ]] && printf "\b \b" && return 1;
+        done
+        printf "\b \b";
+        [[ "${openUrl}" == "true" ]] && open "${url}";
+        return 0;
+    }
+
+    function getFreePort {
+        local port="";
+        until [[ "${port}" != "" ]]
+        do
+            port="$(($RANDOM % 64511 + 1024))"
+            netstat -an | grep tcp4 | grep LISTEN | awk '{print $4}' | awk -F"." '{print $NF}' | /usr/bin/grep -e "^${port}$" &>/dev/null;
+            [[ $? -eq 0 ]] && port="";
+        done
+        echo ${port};
+    }
+
+    function shellLoadTime {
+        for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
+    }
 }
 
 # Only if this is a login shell
@@ -90,8 +94,8 @@ then
     loadAliases
     [[ -e "${HOME}/.loginenv" ]] && source "${HOME}/.loginenv" 2>/dev/null;
     [[ -e "${HOME}/.git-completion" ]] && source "${HOME}/.git-completion" 2>/dev/null;
-    [[ -e "/usr/local/bin/kubectl" ]] && source <(kubectl completion $(basename ${SHELL}))
-    [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh" || test 0;
+    # [[ -e "/usr/local/bin/kubectl" ]] && source <(kubectl completion $(basename ${SHELL}))
+    # [[ -s "${SDKMAN_DIR}/bin/sdkman-init.sh" ]] && source "${SDKMAN_DIR}/bin/sdkman-init.sh" || test 0;
     [[ -e "/usr/local/bin/direnv" ]] && eval "$(direnv hook ${SHELL})"
     [[ -e "/usr/local/bin/starship" ]] && eval "$(starship init ${SHELL})";
 fi
