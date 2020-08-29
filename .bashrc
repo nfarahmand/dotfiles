@@ -35,56 +35,59 @@ function getFreePort {
     local port="";
     until [[ "${port}" != "" ]]
     do
-        port="$(jot -r 1 1024 65535)"
+        port="$(($RANDOM % 64511 + 1024))"
         netstat -an | grep tcp4 | grep LISTEN | awk '{print $4}' | awk -F"." '{print $NF}' | /usr/bin/grep -e "^${port}$" &>/dev/null;
         [[ $? -eq 0 ]] && port="";
     done
     echo ${port};
 }
 
-alias nonascii='pcregrep --color=auto -n "[\x80-\xFF]"'
-alias grep='ggrep --color=auto'
-alias sed='gsed'
-alias awk='gawk'
-alias elasticsearch='elasticsearch -Enetwork.host=0.0.0.0'
-alias cerebro='docker run -d --rm $([[ -e ${HOME}/.cerebro/application.conf ]] && echo "-v ${HOME}/.cerebro/application.conf:/opt/cerebro/conf/application.conf") --name cerebro -it -p9000:9000 yannart/cerebro && urlWaitSpin http://localhost:9000 200 true && docker attach cerebro';
-alias swagger='docker run -d --rm --name swagger -it -p8889:8080 swaggerapi/swagger-editor && urlWaitSpin http://localhost:8889 200 true && docker attach swagger';
-alias openapi='docker run -d --rm --name openapi -it -p3000:3000 mermade/openapi-gui && urlWaitSpin http://localhost:3000 200 true && docker attach openapi';
-alias es='docker run -d --rm --name elasticsearch -it -p9200:9200 -p9300:9300 -v /usr/share/elasticsearch/data elasticsearch:6.8.1 && urlWaitSpin http://localhost:9200 200 true && docker attach elasticsearch';
-alias ff='docker run -d --rm --name=firefox -p5800:5800 -v "${HOME}/.firefox-container":/config --shm-size 2g --security-opt seccomp=unconfined jlesage/firefox && urlWaitSpin http://localhost:5800 200 true && docker attach firefox';
-alias ubuntu='PORT="$(getFreePort)" && docker run -d --rm --name=ubuntu -p${PORT}:80 --shm-size 2g dorowu/ubuntu-desktop-lxde-vnc:bionic && urlWaitSpin http://localhost:${PORT} 200 true && docker attach ubuntu';
-alias dockerps='docker ps --format "{{json .}}" | jq';
-alias dockerpsa='docker ps -a --format "{{json .}}" | jq';
-alias dockerimages='docker images --format "{{json .}}" | jq';
-function dockerinspect { image="$1"; shift; docker inspect $image --format "{{json .}}" | jq $@; }
-alias jwt='/usr/local/bin/jwt';
-alias sha256='openssl dgst -sha256';
-alias weather='curl wttr.in';
-alias whereami='curl -s ifconfig.co/json | jq .';
-alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
-alias goenvinit='eval "$(goenv init -)"';
-alias luaenvinit='eval "$(luaenv init -)"';
-alias luaverinit='. /usr/local/bin/luaver';
-alias rbenvinit='eval "$(rbenv init -)"';
-alias jenvinit='eval "$(jenv init -)"';
-alias nodenvinit='eval "$(nodenv init -)"';
-alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)"';
+function loadAliases {
+    alias nonascii='pcregrep --color=auto -n "[\x80-\xFF]"';
+    which ggrep &>/dev/null && alias grep='ggrep --color=auto';
+    which gsed &>/dev/null && alias sed='gsed';
+    which gawk &>/dev/null && alias awk='gawk';
+    alias elasticsearch='elasticsearch -Enetwork.host=0.0.0.0';
+    alias cerebro='docker run -d --rm $([[ -e ${HOME}/.cerebro/application.conf ]] && echo "-v ${HOME}/.cerebro/application.conf:/opt/cerebro/conf/application.conf") --name cerebro -it -p9000:9000 yannart/cerebro && urlWaitSpin http://localhost:9000 200 true && docker attach cerebro';
+    alias swagger='docker run -d --rm --name swagger -it -p8889:8080 swaggerapi/swagger-editor && urlWaitSpin http://localhost:8889 200 true && docker attach swagger';
+    alias openapi='docker run -d --rm --name openapi -it -p3000:3000 mermade/openapi-gui && urlWaitSpin http://localhost:3000 200 true && docker attach openapi';
+    alias es='docker run -d --rm --name elasticsearch -it -p9200:9200 -p9300:9300 -v /usr/share/elasticsearch/data elasticsearch:6.8.1 && urlWaitSpin http://localhost:9200 200 true && docker attach elasticsearch';
+    alias ff='docker run -d --rm --name=firefox -p5800:5800 -v "${HOME}/.firefox-container":/config --shm-size 2g --security-opt seccomp=unconfined jlesage/firefox && urlWaitSpin http://localhost:5800 200 true && docker attach firefox';
+    alias ubuntu='PORT="$(getFreePort)" && docker run -d --rm --name=ubuntu -p${PORT}:80 --shm-size 2g dorowu/ubuntu-desktop-lxde-vnc:bionic && urlWaitSpin http://localhost:${PORT} 200 true && docker attach ubuntu';
+    alias dockerps='docker ps --format "{{json .}}" | jq';
+    alias dockerpsa='docker ps -a --format "{{json .}}" | jq';
+    alias dockerimages='docker images --format "{{json .}}" | jq';
+    function dockerinspect { image="$1"; shift; docker inspect $image --format "{{json .}}" | jq $@; }
+    alias jwt='/usr/local/bin/jwt';
+    alias sha256='openssl dgst -sha256';
+    alias weather='curl wttr.in';
+    alias whereami='curl -s ifconfig.co/json | jq .';
+    alias scalaenvinit='eval "$(scalaenv init -)" && eval "$(sbtenv init -)"';
+    alias goenvinit='eval "$(goenv init -)"';
+    alias luaenvinit='eval "$(luaenv init -)"';
+    alias luaverinit='. /usr/local/bin/luaver';
+    alias rbenvinit='eval "$(rbenv init -)"';
+    alias jenvinit='eval "$(jenv init -)"';
+    alias nodenvinit='eval "$(nodenv init -)"';
+    alias pyenvinit='eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init init -)"';
 
-function openapi-generator-cli {
-    [[ $# -eq 2 ]] || echo "Usage: $0 <filename> <language>" && return 1;
-    filename="$1";
-    language="$2"
-    tmpdir="$(mktemp -d)";
-    cp "$filename" "$tmpdir";
-    docker run --rm \
-        -v "$tmpdir:/local" openapitools/openapi-generator-cli generate \
-        -i "/local/$filename" \
-        -g "$language"
+    function openapi-generator-cli {
+        [[ $# -eq 2 ]] || echo "Usage: $0 <filename> <language>" && return 1;
+        filename="$1";
+        language="$2"
+        tmpdir="$(mktemp -d)";
+        cp "$filename" "$tmpdir";
+        docker run --rm \
+            -v "$tmpdir:/local" openapitools/openapi-generator-cli generate \
+            -i "/local/$filename" \
+            -g "$language"
+    }
 }
 
 # Only if this is a login shell
 if [[ $- = *i* ]]
 then
+    loadAliases
     [[ -e "${HOME}/.loginenv" ]] && source "${HOME}/.loginenv" 2>/dev/null;
     [[ -e "${HOME}/.git-completion" ]] && source "${HOME}/.git-completion" 2>/dev/null;
     [[ -e "/usr/local/bin/kubectl" ]] && source <(kubectl completion $(basename ${SHELL}))
