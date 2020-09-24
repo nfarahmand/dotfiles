@@ -17,4 +17,5 @@
 .sbt-version
 .scala-version
 .sdkmanrc
+.vscode
 __pycache__
