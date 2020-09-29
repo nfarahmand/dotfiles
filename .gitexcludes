@@ -5,6 +5,7 @@
 *.swo
 *.swp
 .DS_Store
+.direnv
 .envrc
 .go-version
 .idea
