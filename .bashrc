@@ -11,7 +11,6 @@ function loadAliases {
     which ggrep &>/dev/null && alias grep='ggrep --color=auto';
     which gsed &>/dev/null && alias sed='gsed';
     which gawk &>/dev/null && alias awk='gawk';
-    alias elasticsearch='elasticsearch -Enetwork.host=0.0.0.0';
     alias cerebro='docker run -d --rm $([[ -e ${HOME}/.cerebro/application.conf ]] && echo "-v ${HOME}/.cerebro/application.conf:/opt/cerebro/conf/application.conf") --name cerebro -it -p9000:9000 yannart/cerebro && urlWaitSpin http://localhost:9000 200 true && docker attach cerebro';
     alias swagger='docker run -d --rm --name swagger -it -p8889:8080 swaggerapi/swagger-editor && urlWaitSpin http://localhost:8889 200 true && docker attach swagger';
     alias openapi='docker run -d --rm --name openapi -it -p3000:3000 mermade/openapi-gui && urlWaitSpin http://localhost:3000 200 true && docker attach openapi';
