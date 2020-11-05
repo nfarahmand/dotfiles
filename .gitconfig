@@ -137,6 +137,8 @@
 	peeps = !git log --pretty=format:"%Cblue%aN%Creset" --no-merges | sort | uniq -c | sort -rn
 	mergers = !git log --pretty=format:"%Cred%aN%Creset" --merges | sort | uniq -c | sort -rn
 
+	desc = !git describe --tags --dirty --always
+
 	# awesome placeholders
 	crunk = status
 	deploy = status
