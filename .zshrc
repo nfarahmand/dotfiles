@@ -1,30 +1,24 @@
+# Path to your oh-my-zsh installation.
+export ZSH="/Users/neema/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="spaceship"
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=()
+
+source $ZSH/oh-my-zsh.sh
+
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-
-bindkey '^[[1~' beginning-of-line
-bindkey '^a' beginning-of-line
-bindkey '^[[4~' end-of-line
-bindkey '^e' end-of-line
-bindkey '^[[5~' history-search-backward
-bindkey '^[[6~' history-search-forward
-bindkey '^[[3~' delete-char
-bindkey '^[[2~' quoted-insert
-bindkey '^[[5C' forward-word
-bindkey '^[[5D' backward-word
-bindkey '^[\e[C' forward-word
-bindkey '^[[1;5C' forward-word
-bindkey '^[\e[D' backward-word
-bindkey '^[[1;5D' backward-word
-bindkey '^[[1;5C' forward-word
-bindkey '^?' backward-delete-char
-bindkey '^[3;5~' delete-char
-autoload -U edit-command-line
-zle -N edit-command-line
-bindkey '\C-x\C-e' edit-command-line
-
-autoload -U select-word-style
-select-word-style bash
 
 alias -s json='jq .'
 

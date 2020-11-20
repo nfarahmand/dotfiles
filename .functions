@@ -1,0 +1,45 @@
+function dockerinspect { 
+    image="$1"; shift; docker inspect $image --format "{{json .}}" | jq $@; 
+}
+
+function urlWaitSpin {
+    url="${1}";
+    expectedStatus="${2:-200}";
+    openUrl="${3:-false}";
+    timeout=300;
+    sp="⣾⣽⣻⢿⡿⣟⣯⣷";
+    i=0;
+    until [[ $(curl -o /dev/null -sw "%{http_code}" "${url}") == "${expectedStatus}" && ${timeout} -gt 0 ]]
+    do
+        [[ "${BASH_VERSION}" != "" ]] && printf "\b${sp:i++%${#sp}:1}"
+        if [[ "${ZSH_VERSION}" != "" ]]
+        then
+            ((i%=${#sp}));
+            ((i+=1));
+            printf "\b${${(@z)sp}[$i]//\"}"
+        fi
+        sleep .1
+        ((timeout-=1))
+        [[ ${timeout} -le 0 ]] && printf "\b \b" && return 1;
+    done
+    printf "\b \b";
+    [[ "${openUrl}" == "true" ]] && open "${url}";
+    return 0;
+}
+
+
+function getFreePort {
+    local port="";
+    until [[ "${port}" != "" ]]
+    do
+        port="$(($RANDOM % 64511 + 1024))"
+        netstat -an | grep tcp4 | grep LISTEN | awk '{print $4}' | awk -F"." '{print $NF}' | /usr/bin/grep -e "^${port}$" &>/dev/null;
+        [[ $? -eq 0 ]] && port="";
+    done
+    echo ${port};
+}
+
+function shellLoadTime {
+    for i in $(seq 1 10); do /usr/bin/time $SHELL -i -c exit; done
+}
+

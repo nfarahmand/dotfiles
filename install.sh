@@ -1,7 +1,5 @@
 #!/bin/bash
 
-git submodule init && git submodule update;
-
 TIME="$(date +%Y%m%d%H%M%S)";
 BASEDIRS=( "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )" "$( cd "$( dirname "${BASH_SOURCE[0]}" )"/../privatedotfiles && pwd )" );
 
@@ -26,6 +24,11 @@ fi
 echo "${BASEDIRS[0]}/brew/install.sh ${CLEANUPFILE}";
 "${BASEDIRS[0]}/brew/install.sh" "${CLEANUPFILE}";
 
+# install oh-my-zsh and spaceship theme
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme" 
+
 for BASEDIR in ${BASEDIRS[@]};
 do
     find "${BASEDIR}" -name '.*' -maxdepth 1 -mindepth 1 | egrep -ve '.DS_Store|.gitignore|.git$' | awk -F'/' '{print $NF}' | while read dotfile
@@ -46,7 +49,6 @@ echo "Setting up iTerm2 defaults..."
 
 defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string ${HOME}/.iterm
-defaults write com.googlecode.iterm2.plist SUEnableAutomaticChecks -bool false
 defaults write com.apple.desktopservices DSDontWriteNetworkStores true # disable creation of .DS_Store files
 defaults write com.googlecode.iterm2.plist BootstrapDaemon -bool false #makes sudo thumbprint ID work
 defaults read com.googlecode.iterm2.plist >/dev/null
@@ -55,16 +57,16 @@ defaults read -app iTerm >/dev/null
 # Enable keyboard to be used to navigate dialogs.  
 # This probably won't take effect until after you open the sysprefs->keyboard->shortcuts window or restart.
 # See https://stackoverflow.com/a/54192723
-defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
+# defaults write NSGlobalDomain AppleKeyboardUIMode -int 2
 
 # Prevent iTunes from hijacking the play key, but only if not on High Sierra
-which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsString | egrep "10.1(3|4)" &>/dev/null || launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist &>/dev/null
+# which launchctl &>/dev/null && defaults read loginwindow SystemVersionStampAsString | egrep "10.1(3|4)" &>/dev/null || launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist &>/dev/null
 
 # Prevent Cisco AnyConnect from launching at startup
-[[ -e /Library/LaunchAgents/com.cisco.anyconnect.gui.plist ]] &>/dev/null && launchctl unload -w /Library/LaunchAgents/com.cisco.anyconnect.gui.plist
+# [[ -e /Library/LaunchAgents/com.cisco.anyconnect.gui.plist ]] &>/dev/null && launchctl unload -w /Library/LaunchAgents/com.cisco.anyconnect.gui.plist
 
 # Fix zsh compinit permission issue
-zsh -ic 'compaudit | xargs chmod g-w'
+# zsh -ic 'compaudit | xargs chmod g-w'
 
 if [[ -s "${CLEANUPFILE}" ]]
 then
