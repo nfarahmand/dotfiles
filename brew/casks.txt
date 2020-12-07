@@ -9,5 +9,5 @@ homebrew/cask/pycharm
 homebrew/cask/slack
 homebrew/cask/spotify
 homebrew/cask/visual-studio-code
-homebrew/cask/zoomus
+homebrew/cask/zoom
 homebrew/cask-fonts/font-fira-code

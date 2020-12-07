@@ -16,7 +16,7 @@ done < ${BASEDIR}/taps.txt
 while read cask
 do
 	basecask="$(basename ${cask})";
-    [[ -e "/usr/local/Caskroom/${basecask}" ]] || compgen -G "${HOME}/Library/Caches/Homebrew/Cask/${basecask}--*" >/dev/null && echo "Already installed: ${basecask}" || brew cask install "${cask}";
+    [[ -e "/usr/local/Caskroom/${basecask}" ]] || compgen -G "${HOME}/Library/Caches/Homebrew/Cask/${basecask}--*" >/dev/null && echo "Already installed: ${basecask}" || brew install --cask "${cask}";
 done < ${BASEDIR}/casks.txt
 
 while read package

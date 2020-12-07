@@ -9,11 +9,14 @@ httpstat
 java
 jenv
 jq
+openssl
 postgres
 pyenv
 pyenv-virtualenv
+readline
 starship
 tree
 watch
+xz
 youtube-dl
 zlib
