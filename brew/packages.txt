@@ -15,6 +15,7 @@ pyenv
 pyenv-virtualenv
 readline
 starship
+tmux
 tree
 watch
 xz
