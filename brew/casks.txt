@@ -6,6 +6,7 @@ homebrew/cask/iterm2
 homebrew/cask/openvpn-connect
 homebrew/cask/postman
 homebrew/cask/pycharm
+homebrew/cask/rectangle
 homebrew/cask/slack
 homebrew/cask/spotify
 homebrew/cask/visual-studio-code
